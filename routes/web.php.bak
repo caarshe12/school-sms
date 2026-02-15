@@ -1,0 +1,27 @@
+<?php
+
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\SchoolClassController;
+use App\Http\Controllers\FeeController;
+use App\Http\Controllers\PaymentController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::resource('students', StudentController::class);
+Route::resource('staff', StaffController::class);
+Route::resource('classes', SchoolClassController::class)->parameters(['classes' => 'schoolClass']);
+
+Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendance.index');
+Route::get('/attendance/report', [App\Http\Controllers\AttendanceController::class, 'report'])->name('attendance.report');
+Route::get('/attendance/create', [App\Http\Controllers\AttendanceController::class, 'create'])->name('attendance.create');
+Route::post('/attendance', [App\Http\Controllers\AttendanceController::class, 'store'])->name('attendance.store');
+
+Route::resource('fees', FeeController::class);
+Route::post('/fees/{fee}/pay', [FeeController::class, 'pay'])->name('fees.pay');
+Route::post('/fees/{fee}/unpay', [FeeController::class, 'unpay'])->name('fees.unpay');
+Route::resource('payments', PaymentController::class);
+
+Route::resource('exams', \App\Http\Controllers\ExamController::class);
+Route::post('/exams/{exam}/marks', [\App\Http\Controllers\ExamController::class, 'updateMark'])->name('exams.marks.update');
