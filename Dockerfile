@@ -39,8 +39,12 @@ COPY . .
 RUN npm install && npm run build
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 775 /var/www/storage \
+RUN mkdir -p /var/www/storage/framework/cache \
+    && mkdir -p /var/www/storage/framework/sessions \
+    && mkdir -p /var/www/storage/framework/views \
+    && mkdir -p /var/www/storage/logs \
+    && chown -R www-data:www-data /var/www \
+    && chmod -R 777 /var/www/storage \
     && chmod -R 775 /var/www/bootstrap/cache
 
 # Generate key if needed (or rely on APP_KEY env var)
