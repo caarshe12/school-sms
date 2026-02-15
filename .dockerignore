@@ -1,0 +1,9 @@
+.git
+.env
+node_modules
+vendor
+public/build
+storage/framework
+storage/logs
+tests
+bin/render-build.sh
